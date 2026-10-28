@@ -1,0 +1,60 @@
+name: Build Minecraft Indev NRO
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup GraalVM AOT
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm-community'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          components: 'native-image'
+
+      - name: Install Cross-Compilers and Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu build-essential cmake zip unzip curl wget
+
+      - name: Install devkitPro & Switch Toolchain
+        run: |
+          wget https://apt.devkitpro.org/install-devkitpro-pacman
+          chmod +x install-devkitpro-pacman
+          sudo ./install-devkitpro-pacman
+          sudo dkp-pacman -S --noconfirm switch-dev switch-mesa switch-libdrm_nouveau switch-sdl2 switch-openal-soft
+          echo "DEVKITPRO=/opt/devkitpro" >> $GITHUB_ENV
+          echo "PATH=/opt/devkitpro/devkitA64/bin:/opt/devkitpro/tools/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Build musl-nx and Native Support Libraries
+        run: |
+          chmod +x scripts/*.sh pz-switch/*.sh pz-switch/horizon/app/Makefile
+          bash scripts/build-switch-deps.sh
+
+      - name: Compile Minecraft Indev to ARM64 Object (GraalVM AOT)
+        run: |
+          bash scripts/build-indev-a64.sh
+
+      - name: Link and Package NRO (Horizon OS)
+        run: |
+          bash scripts/build-indev-nro.sh
+
+      - name: Upload NRO Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: minecraft_indev_horizon
+          path: minecraft_indev.nro
+          if-no-files-found: error

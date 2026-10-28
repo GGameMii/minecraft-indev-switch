@@ -1,0 +1,24 @@
+{
+  "id": "indev_clean",
+  "time": "2010-02-23T00:00:00+00:00",
+  "releaseTime": "2010-02-23T00:00:00+00:00",
+  "type": "old_alpha",
+  "minecraftArguments": " ",
+  "mainClass": "net.minecraft.client.Minecraft",
+  "minimumLauncherVersion": 4,
+  "assets": "pre-1.6",
+  "libraries": [
+    {
+      "name": "net.java.jinput:jinput:2.0.5"
+    },
+    {
+      "name": "net.java.jutils:jutils:1.0.0"
+    },
+    {
+      "name": "org.lwjgl.lwjgl:lwjgl:2.9.0"
+    },
+    {
+      "name": "org.lwjgl.lwjgl:lwjgl_util:2.9.0"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# Build outputs and intermediate objects
+build/
+build-*/
+tmp/
+*.elf
+*.nacp
+*.o
+*.a
+*.map
+*.log
+
+# Keep the clean game jar
+!minecraft_indev_clean.jar
+
+# Lib natives for PC
+lib/natives/
+switch_nro/build/
+switch_ref/
+minecraft_indev.nro
+cfr.jar
+gamepad.jar
+in-20100223MP\ v0.2.0\ modloader.jar
+*.jar.bak
