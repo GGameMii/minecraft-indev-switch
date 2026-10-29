@@ -33,7 +33,10 @@ jobs:
       - name: Install devkitPro & Switch Toolchain
         run: |
           docker create --name dkp devkitpro/devkita64:latest
-          sudo docker cp dkp:/opt/devkitpro /opt/devkitpro
+          sudo mkdir -p /opt/devkitpro
+          for dir in devkitA64 libnx portlibs tools; do
+            sudo docker cp dkp:/opt/devkitpro/$dir /opt/devkitpro/
+          done
           docker rm dkp
           echo "DEVKITPRO=/opt/devkitpro" >> $GITHUB_ENV
           echo "/opt/devkitpro/devkitA64/bin" >> $GITHUB_PATH
