@@ -6,7 +6,7 @@ HORIZON="$PZROOT/horizon/app"
 
 echo "=== Prelinking Java / SubstrateVM object ==="
 export PZROOT="$ROOT"
-export GRAALVM="${GRAALVM:-$JAVA_HOME}"
+export GRAALVM="$(dirname "$(dirname "$(which native-image)")")"
 
 bash "$PZROOT/prelink-j.sh" "$ROOT/build-a64/mc.o" "$ROOT/build-a64/j.o"
 
