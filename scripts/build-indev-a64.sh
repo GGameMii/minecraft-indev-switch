@@ -51,7 +51,7 @@ native-image -cp "$CP" \
   -H:ConfigurationFileDirectories="$ROOT/config-gen" --no-fallback -J-Xmx14g \
   --enable-native-access=ALL-UNNAMED --enable-url-protocols=http,https -H:+ReportExceptionStackTraces -H:+AddAllCharsets \
   --target=linux-aarch64 -march=compatibility -H:+UnlockExperimentalVMOptions \
-  -H:+UseCAPCache -H:CAPCacheDir="$ROOT/pz-switch/cap-a64" \
+  -H:+NewCAPCache -H:CAPCacheDir="$ROOT/pz-switch/cap-a64" \
   -H:CCompilerPath=/usr/bin/aarch64-linux-gnu-gcc -H:+ExitAfterRelocatableImageWrite -H:TempDirectory="$PWD/tmp" \
   -o mc net.minecraft.client.Minecraft
 

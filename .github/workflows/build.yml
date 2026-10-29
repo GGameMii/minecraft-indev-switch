@@ -28,7 +28,7 @@ jobs:
       - name: Install Cross-Compilers and Tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu build-essential cmake zip unzip curl wget
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu qemu-user-static binfmt-support build-essential cmake zip unzip curl wget
 
       - name: Install devkitPro & Switch Toolchain
         run: |
