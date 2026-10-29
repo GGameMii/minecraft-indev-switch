@@ -32,9 +32,9 @@ jobs:
 
       - name: Install devkitPro & Switch Toolchain
         run: |
-          wget https://github.com/devkitPro/pacman/releases/latest/download/devkitpro-pacman.amd64.deb
-          sudo dpkg -i devkitpro-pacman.amd64.deb || sudo apt-get install -f -y
-          sudo dkp-pacman -S --noconfirm switch-dev switch-mesa switch-libdrm_nouveau switch-sdl2 switch-openal-soft
+          docker create --name dkp devkitpro/devkita64:latest
+          sudo docker cp dkp:/opt/devkitpro /opt/devkitpro
+          docker rm dkp
           echo "DEVKITPRO=/opt/devkitpro" >> $GITHUB_ENV
           echo "/opt/devkitpro/devkitA64/bin" >> $GITHUB_PATH
           echo "/opt/devkitpro/tools/bin" >> $GITHUB_PATH
